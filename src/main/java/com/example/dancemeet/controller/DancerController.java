@@ -12,9 +12,9 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/dancers")
 public class DancerController {
-    private DancerSerivice dancerSerivice;
+    private final DancerSerivice dancerSerivice;
 
     @Autowired
     public DancerController(DancerSerivice dancerSerivice){
@@ -33,13 +33,7 @@ public class DancerController {
         return ResponseEntity.ok(dancer);
     }
 
-    @PostMapping("/event")
-    public ResponseEntity<Void> joinEvent(@RequestParam Long dancerId, @RequestParam Long eventId){
-        dancerSerivice.joinEvent(dancerId, eventId);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/dancers")
+    @GetMapping
     public ResponseEntity<List<Dancer>> getAllDancers(){
         List<Dancer> dancers = dancerSerivice.getAllDancers();
         return ResponseEntity.ok(dancers);

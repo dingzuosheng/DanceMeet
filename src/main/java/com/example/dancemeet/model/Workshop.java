@@ -5,26 +5,49 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-public class Workshop extends Event{
+public class Workshop{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long eventId;
-    @OneToOne
-    private Dancer trainer_m;
+    private Long workshopId;
+
+    @Column(name = "time", unique = true)
+    private Date time;
+
+    @Column(name = "price")
+    private double price;
 
     @OneToOne
-    private Dancer trainer_w;
+    private Address address;
+
+    @Column(name = "deposit")
+    private double deposit;
+
+    @OneToMany
+    private List<Dancer> members;
+
+    @OneToOne
+    private Dancer coach1;
+
+    @OneToOne
+    private Dancer coach2;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "dance_type")
-    private DancerType dancerType;
+    private DancerType danceType;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "level")
     private Level level;
+
+    public void receivePayment(){
+        this.deposit += this.price;
+    }
 
 }
