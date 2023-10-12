@@ -82,4 +82,16 @@ public class EventService {
         return StreamSupport.stream(partyRepository.findAll().spliterator(), false)
                             .toList();
     }
+
+    public Workshop getWorkshop(Long workshopId){
+        Optional<Workshop> optionalWorkshop = workshopRepository.findById(workshopId);
+        return optionalWorkshop.orElse(null);
+    }
+
+    public Party getParty(Long partyId){
+        Optional<Party> optionalParty = partyRepository.findById(partyId);
+        return optionalParty.orElse(null);
+    }
+
+
 }

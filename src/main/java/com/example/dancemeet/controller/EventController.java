@@ -44,16 +44,28 @@ public class EventController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{workshopId}")
+    @DeleteMapping("/workshops/{workshopId}")
     public ResponseEntity<Void> deleteWorkshop(@PathVariable Long workshopId){
         eventService.deleteWorkshop(workshopId);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{partyId}")
+    @DeleteMapping("/parties/{partyId}")
     public ResponseEntity<Void> deleteParty(@PathVariable Long partyId){
         eventService.deleteParty(partyId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/workshops/{workshopId}")
+    public ResponseEntity<Workshop> getWorkshop(@PathVariable Long workshopId){
+        Workshop workshop = eventService.getWorkshop(workshopId);
+        return ResponseEntity.ok(workshop);
+    }
+
+    @GetMapping("/parties/{partyId}")
+    public ResponseEntity<Party> getParty(@PathVariable Long partyId){
+        Party party = eventService.getParty(partyId);
+        return ResponseEntity.ok(party);
     }
 
 }
