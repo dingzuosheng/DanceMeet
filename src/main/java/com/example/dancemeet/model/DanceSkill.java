@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 public class DanceSkill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String name;
+    @Column(name = "skillId")
+    private Long skillId;
+    private DanceType name;
     private Level level;
 }
