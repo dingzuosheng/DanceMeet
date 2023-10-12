@@ -5,6 +5,7 @@ import com.example.dancemeet.dto.DancerDto;
 import com.example.dancemeet.exception.*;
 import com.example.dancemeet.model.DanceSkill;
 import com.example.dancemeet.model.Dancer;
+import com.example.dancemeet.repository.DanceSkillRepository;
 import com.example.dancemeet.repository.DancerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,14 @@ import java.util.stream.StreamSupport;
 @Service
 public class DancerSerivice {
     private final DancerRepository dancerRepository;
+    private final DanceSkillRepository danceSkillRepository;
     private final ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
-    public DancerSerivice(DancerRepository dancerRepository){
+    public DancerSerivice(DancerRepository dancerRepository,
+                          DanceSkillRepository danceSkillRepository){
         this.dancerRepository = dancerRepository;
+        this.danceSkillRepository = danceSkillRepository;
     }
 
     public Dancer register(DancerDto dancerDto){
@@ -71,23 +75,37 @@ public class DancerSerivice {
         if(optionalDancer.isPresent()){
             Dancer dancer = optionalDancer.get();
             List<DanceSkill> skills = dancer.getSkills();
-            skills.add(skill);
-            dancer.setSkills(skills);
-            dancerRepository.save(dancer);
-            return dancer;
+            if(checkIfDanceSkillAlreadyExist(skill)) {
+                skills.add(skill);
+                dancer.setSkills(skills);
+                dancerRepository.save(dancer);
+                return dancer;
+            }else{
+                throw new DanceSkillNotFoundException();
+            }
         }else{
             throw new DancerNotFoundException();
         }
     }
+
+    private boolean checkIfDanceSkillAlreadyExist(DanceSkill skill){
+            Optional<DanceSkill> optionalDanceSkill = danceSkillRepository.findByName(skill.getName());
+            return optionalDanceSkill.isPresent();
+    }
+
     public Dancer updateDancerCoachSkill(Long dancerId, DanceSkill skill){
         Optional<Dancer> optionalDancer = dancerRepository.findById(dancerId);
         if(optionalDancer.isPresent()){
             Dancer dancer = optionalDancer.get();
             List<DanceSkill> coachSkills = dancer.getCoachskills();
-            coachSkills.add(skill);
-            dancer.setCoachskills(coachSkills);
-            dancerRepository.save(dancer);
-            return dancer;
+            if(checkIfDanceSkillAlreadyExist(skill)) {
+                coachSkills.add(skill);
+                dancer.setCoachskills(coachSkills);
+                dancerRepository.save(dancer);
+                return dancer;
+            }else{
+                throw new DanceSkillNotFoundException();
+            }
         }else{
             throw new DancerNotFoundException();
         }
