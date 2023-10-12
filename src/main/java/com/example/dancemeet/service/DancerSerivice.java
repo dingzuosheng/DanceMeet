@@ -3,6 +3,7 @@ package com.example.dancemeet.service;
 
 import com.example.dancemeet.dto.DancerDto;
 import com.example.dancemeet.exception.*;
+import com.example.dancemeet.model.DanceSkill;
 import com.example.dancemeet.model.Dancer;
 import com.example.dancemeet.repository.DancerRepository;
 import org.modelmapper.ModelMapper;
@@ -59,4 +60,38 @@ public class DancerSerivice {
         return StreamSupport.stream(dancerRepository.findAll().spliterator(),false)
                 .toList();
     }
+
+    public Dancer getDancer(Long dancerId){
+        Optional<Dancer> optionalDancer = dancerRepository.findById(dancerId);
+        return optionalDancer.orElse(null);
+    }
+
+    public Dancer updateDancerSkill(Long dancerId, DanceSkill skill){
+        Optional<Dancer> optionalDancer = dancerRepository.findById(dancerId);
+        if(optionalDancer.isPresent()){
+            Dancer dancer = optionalDancer.get();
+            List<DanceSkill> skills = dancer.getSkills();
+            skills.add(skill);
+            dancer.setSkills(skills);
+            dancerRepository.save(dancer);
+            return dancer;
+        }else{
+            throw new DancerNotFoundException();
+        }
+    }
+    public Dancer updateDancerCoachSkill(Long dancerId, DanceSkill skill){
+        Optional<Dancer> optionalDancer = dancerRepository.findById(dancerId);
+        if(optionalDancer.isPresent()){
+            Dancer dancer = optionalDancer.get();
+            List<DanceSkill> coachSkills = dancer.getCoachskills();
+            coachSkills.add(skill);
+            dancer.setCoachskills(coachSkills);
+            dancerRepository.save(dancer);
+            return dancer;
+        }else{
+            throw new DancerNotFoundException();
+        }
+    }
+
+
 }
