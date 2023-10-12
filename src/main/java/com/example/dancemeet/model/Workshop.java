@@ -23,7 +23,7 @@ public class Workshop{
     @Column(name = "price")
     private double price;
 
-    @OneToOne
+    @Embedded
     private Address address;
 
     @Column(name = "deposit")
