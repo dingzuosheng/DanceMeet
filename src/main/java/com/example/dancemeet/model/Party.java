@@ -33,7 +33,7 @@ public class Party{
     private List<Dancer> members;
 
     @Enumerated(EnumType.ORDINAL)
-    private List<DancerType> musicTypes;
+    private List<DanceType> musicTypes;
 
     public void receivePayment(){
         this.deposit += this.price;

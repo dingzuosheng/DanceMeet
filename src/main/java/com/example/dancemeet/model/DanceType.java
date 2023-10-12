@@ -1,7 +1,7 @@
 package com.example.dancemeet.model;
 
 
-public enum DancerType {
+public enum DanceType {
     BACHATA,
     SALSA,
     KIZOMBA

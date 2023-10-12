@@ -40,7 +40,7 @@ public class Workshop{
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "dance_type")
-    private DancerType danceType;
+    private DanceType danceType;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "level")

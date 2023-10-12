@@ -2,7 +2,7 @@ package com.example.dancemeet.dto;
 
 
 import com.example.dancemeet.model.Address;
-import com.example.dancemeet.model.DancerType;
+import com.example.dancemeet.model.DanceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -15,5 +15,5 @@ public class PartyDto {
     private Date time;
     private double price;
     private Address address;
-    private List<DancerType> musicTypes;
+    private List<DanceType> musicTypes;
 }

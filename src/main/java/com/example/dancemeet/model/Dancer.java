@@ -31,7 +31,9 @@ public class Dancer {
     @OneToMany
     private List<DanceSkill> coachskills;
     @ManyToOne
-    private Event event;
+    private Workshop workshop;
+    @ManyToOne
+    private Party party;
     @Column
     private double deposit;
 
