@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/events")
 public class EventController {
@@ -18,27 +20,27 @@ public class EventController {
         this.eventService = eventService;
     }
 
+    @GetMapping("/workshops")
+    public ResponseEntity<List<Workshop>> getAllWorkshops(){
+        List<Workshop> workshops = eventService.getAllWorkshops();
+        return ResponseEntity.ok(workshops);
+    }
+
     @PostMapping("/workshops")
     public ResponseEntity<Void> addWorkshop(@RequestBody Workshop workshop){
         eventService.addWorkshop(workshop);
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/parties")
+    public ResponseEntity<List<Party>> getAllParties(){
+        List<Party> parties = eventService.getAllParties();
+        return ResponseEntity.ok(parties);
+    }
+
     @PostMapping("/parties")
     public ResponseEntity<Void> addParty(@RequestBody Party party){
         eventService.addParty(party);
-        return ResponseEntity.ok().build();
-    }
-
-    @PatchMapping("/workshops")
-    public ResponseEntity<Void> updateWorkshop(@RequestBody Workshop workshop){
-        eventService.updateWorkshop(workshop);
-        return ResponseEntity.ok().build();
-    }
-
-    @PatchMapping("/parties")
-    public ResponseEntity<Void> updateParty(@RequestBody Party party){
-        eventService.updateParty(party);
         return ResponseEntity.ok().build();
     }
 
